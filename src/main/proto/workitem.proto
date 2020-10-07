@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_package = "com.github.karlnicholas.djsorch.processor";
+
+message WorkItemMessage {
+  map<string, bytes> params = 1;
+  map<string, bytes> results = 2;
+}
+
+
+service TransactionProcessor {
+  rpc ValidateAndProcess(WorkItemMessage) returns (WorkItemMessage) {}
+}
+

@@ -12,7 +12,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.github.karlnicholas.djsorch.processor.TransactionProcessor;
+import com.github.karlnicholas.djsorch.processor.TransactionProcessorJava;
 import com.github.karlnicholas.djsorch.queue.SubjectQueueManager;
 
 @SpringBootApplication
@@ -25,12 +25,12 @@ public class DjsApplication implements ApplicationRunner {
 
 	private final DataSource dataSource; 
 	private final SubjectQueueManager subjectQueueManager;
-	private final TransactionProcessor transactionProcessor;
+	private final TransactionProcessorJava transactionProcessor;
 
 	public DjsApplication(
 			DataSource dataSource, 
 			SubjectQueueManager subjectQueueManager, 
-			TransactionProcessor transactionProcessor
+			TransactionProcessorJava transactionProcessor
 	) {
 		this.dataSource = dataSource;
 		this.subjectQueueManager = subjectQueueManager;
