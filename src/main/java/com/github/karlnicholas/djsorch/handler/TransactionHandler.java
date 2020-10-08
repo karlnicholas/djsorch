@@ -48,6 +48,7 @@ public class TransactionHandler {
 				serviceClients.initialBillingCycle(wim.toBuilder().putAllParams(params).putAllResults(results).build());
 			};
 		}
+		completePostedTransaction.accept(queueEntry.getQueueId());
 
 	}
 		

@@ -1,7 +1,5 @@
 package com.github.karlnicholas.djsorch.queue;
 
-import javax.servlet.ServletResponse;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.server.ServerWebExchange;
