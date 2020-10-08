@@ -16,7 +16,6 @@ import org.springframework.web.server.ServerWebExchange;
 import com.github.karlnicholas.djsorch.model.TransactionSubmitted;
 import com.github.karlnicholas.djsorch.queue.QueueEntry;
 import com.github.karlnicholas.djsorch.queue.SubjectQueueManager;
-import com.github.karlnicholas.djsorch.repository.TransactionOpenRepository;
 import com.github.karlnicholas.djsorch.repository.TransactionSubmittedRepository;
 import com.github.karlnicholas.djsorch.service.BusinessDateService;
 
@@ -31,7 +30,6 @@ public class QueueRestController {
 	public QueueRestController(
 			SubjectQueueManager subjectQueueManager, 
 			TransactionSubmittedRepository transactionSubmittedRepository, 
-			TransactionOpenRepository transactionOpenRepository, 
 			BusinessDateService businessDateService 
 	) {
 		this.subjectQueueManager = subjectQueueManager;

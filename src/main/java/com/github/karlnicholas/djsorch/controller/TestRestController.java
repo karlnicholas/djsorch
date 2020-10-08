@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.karlnicholas.djsorch.processor.CalculatorGrpc;
 import com.github.karlnicholas.djsorch.processor.CalculatorGrpc.CalculatorBlockingStub;
 import com.github.karlnicholas.djsorch.processor.CalculatorOuterClass;
-import com.github.karlnicholas.djsorch.processor.TransactionProcessorGrpc;
-import com.github.karlnicholas.djsorch.processor.TransactionProcessorGrpc.TransactionProcessorBlockingStub;
-import com.github.karlnicholas.djsorch.processor.Workitem.WorkItemMessage;
-import com.google.protobuf.Any;
+import com.github.karlnicholas.djsorch.distributed.TransactionProcessorGrpc;
+import com.github.karlnicholas.djsorch.distributed.TransactionProcessorGrpc.TransactionProcessorBlockingStub;
+import com.github.karlnicholas.djsorch.distributed.Workitem.WorkItemMessage;
 import com.google.protobuf.ByteString;
 
 import io.grpc.ManagedChannel;

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option java_package = "com.github.karlnicholas.djsorch.processor";
+option java_package = "com.github.karlnicholas.djsorch.distributed";
 
 message WorkItemMessage {
   map<string, bytes> params = 1;
@@ -10,5 +10,7 @@ message WorkItemMessage {
 
 service TransactionProcessor {
   rpc ValidateAndProcess(WorkItemMessage) returns (WorkItemMessage) {}
+  rpc AccountFunded(WorkItemMessage) returns (WorkItemMessage) {}
+  rpc InitialBillingCycle(WorkItemMessage) returns (WorkItemMessage) {}
 }
 
