@@ -14,3 +14,9 @@ service TransactionProcessor {
   rpc InitialBillingCycle(WorkItemMessage) returns (WorkItemMessage) {}
 }
 
+service BillingCycleProcessor {
+  rpc AccountDueDate(WorkItemMessage) returns (WorkItemMessage) {}
+  rpc AccountInterest(WorkItemMessage) returns (WorkItemMessage) {}
+  rpc AccountBillingCycle(WorkItemMessage) returns (WorkItemMessage) {}
+  rpc AccountClosing(WorkItemMessage) returns (WorkItemMessage) {}
+}

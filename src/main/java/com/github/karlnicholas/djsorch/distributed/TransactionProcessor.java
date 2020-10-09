@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.lognet.springboot.grpc.GRpcService;
 
-import com.github.karlnicholas.djsorch.distributed.Workitem.WorkItemMessage;
+import com.github.karlnicholas.djsorch.distributed.Grpcservices.WorkItemMessage;
 import com.github.karlnicholas.djsorch.journal.BillingCyclePosting;
 import com.github.karlnicholas.djsorch.journal.LoanFundingPosting;
 import com.github.karlnicholas.djsorch.journal.PostingFunctions;
@@ -113,27 +113,24 @@ public class TransactionProcessor extends TransactionProcessorGrpc.TransactionPr
 	@Override
 	public void initialBillingCycle(WorkItemMessage request, StreamObserver<WorkItemMessage> responseObserver) {
 		Long accountId = Long.parseLong(request.getParamsOrThrow("subject").toStringUtf8());
-		loanRepository.findByAccountId(accountId)
-				.ifPresent(loan->{
-					Period termsRemaining = loan.getInceptionDate().until(loan.getInceptionDate().plusMonths(loan.getTermMonths()));
-					BillingCyclePosting billingCycle = BillingCyclePosting.builder().periodStartDate(loan.getInceptionDate())
-							.periodEndDate(loan.getInceptionDate().plusMonths(1)).fixedMindue(loan.getFixedMindue())
-							.deliquent(Boolean.FALSE)
-							.closed(Boolean.FALSE)
-							.termsRemaining(termsRemaining.getMonths())
-							.mindueDate(loan.getInceptionDate().plusMonths(1).minusDays(5)).principal(loan.getPrincipal())
-							.build();
-					TransactionOpen billingCycleTransaction = TransactionOpen.builder()
-							// TODO: redo the table id to be sequence id.
-							.accountId(loan.getAccountId())
-							.version(1L)
-							.businessDate(businessDateService.getBusinessDate())
-							.transactionDate(billingCycle.retrieveTransactionDate())
-							.type(TransactionType.BILLING_CYCLE)
-							.payload(postingReader.writeValueAsString(billingCycle)).build();
-					transactionOpenRepository.save(billingCycleTransaction);
-
-				});
+		Loan loan = loanRepository.findByAccountId(accountId);
+		Period termsRemaining = loan.getInceptionDate().until(loan.getInceptionDate().plusMonths(loan.getTermMonths()));
+		BillingCyclePosting billingCycle = BillingCyclePosting.builder().periodStartDate(loan.getInceptionDate())
+				.periodEndDate(loan.getInceptionDate().plusMonths(1)).fixedMindue(loan.getFixedMindue())
+				.deliquent(Boolean.FALSE)
+				.closed(Boolean.FALSE)
+				.termsRemaining(termsRemaining.getMonths())
+				.mindueDate(loan.getInceptionDate().plusMonths(1).minusDays(5)).principal(loan.getPrincipal())
+				.build();
+		TransactionOpen billingCycleTransaction = TransactionOpen.builder()
+				// TODO: redo the table id to be sequence id.
+				.accountId(loan.getAccountId())
+				.version(1L)
+				.businessDate(businessDateService.getBusinessDate())
+				.transactionDate(billingCycle.retrieveTransactionDate())
+				.type(TransactionType.BILLING_CYCLE)
+				.payload(postingReader.writeValueAsString(billingCycle)).build();
+		transactionOpenRepository.save(billingCycleTransaction);
 		responseObserver.onNext(request.toBuilder()
 				.putAllParams(request.getParamsMap())
 				.putAllResults(request.getResultsMap())

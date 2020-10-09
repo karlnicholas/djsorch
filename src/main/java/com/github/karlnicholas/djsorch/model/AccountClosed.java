@@ -22,6 +22,7 @@ public class AccountClosed implements Persistable<Long> {
 	@Id private Long id;
 
 	private LocalDate openDate;
+	private Long originalId;
 
 	@Transient
     private boolean newAccountClosed;

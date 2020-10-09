@@ -5,7 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import com.github.karlnicholas.djsorch.distributed.TransactionProcessorGrpc.TransactionProcessorBlockingStub;
-import com.github.karlnicholas.djsorch.distributed.Workitem.WorkItemMessage;
+import com.github.karlnicholas.djsorch.distributed.Grpcservices.WorkItemMessage;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;

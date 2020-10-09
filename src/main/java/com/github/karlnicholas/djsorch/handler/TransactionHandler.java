@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.github.karlnicholas.djsorch.distributed.ServiceClients;
-import com.github.karlnicholas.djsorch.distributed.Workitem.WorkItemMessage;
+import com.github.karlnicholas.djsorch.distributed.Grpcservices.WorkItemMessage;
 import com.github.karlnicholas.djsorch.model.TransactionType;
 import com.github.karlnicholas.djsorch.queue.QueueEntry;
 import com.google.protobuf.ByteString;
