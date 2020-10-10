@@ -38,7 +38,7 @@ public class PostingReader {
 		this.objectMapper = objectMapper;
 	}
     public Class<? extends PostingFunctions> getPostingClassType(Transaction transaction) {
-    	return types.get( transaction.getType());
+    	return types.get( transaction.getTransactionType());
     }
 	
     public <T extends PostingFunctions> T  readValue(Transaction transaction, Class<T> valueType) {
@@ -51,7 +51,7 @@ public class PostingReader {
     
     public <T extends PostingFunctions> T instancePayload(Transaction transaction) {
     	try {
-    		String canonical = types.get(transaction.getType()).getCanonicalName();
+    		String canonical = types.get(transaction.getTransactionType()).getCanonicalName();
     		JavaType javaType = objectMapper.getTypeFactory().constructFromCanonical(canonical);
     		return objectMapper.readValue(transaction.getPayload(), javaType);
 		} catch (JsonProcessingException e) {

@@ -15,16 +15,16 @@ public interface TransactionOpenRepository extends CrudRepository<TransactionOpe
 	List<TransactionOpen> findByAccountId(Long id);
 	Optional<TransactionOpen> findByAccountIdAndTransactionType(Long accountId, TransactionType transactionType);
 	
-	@Query(value = "select t.* from transactionopen t where t.account_id = :accountId and t.type = 9 and t.id = (select max(id) from transactionopen where account_id = :accountId and type = 9)")
+	@Query(value = "select t.* from transaction_open t where t.account_id = :accountId and t.type = 'LOAN_FUNDING' and t.id = (select max(id) from transaction_open where account_id = :account_id and transaction_type = 'LOAN_FUNDING')")
 	TransactionOpen fetchLatestBillingCycleForAccount(@Param("accountId") Long accountId);
 
-	@Query(value = "select t.* from transactionopen t where t.type = 9 and t.id not in (select distinct(t1.id) from transactionopen t1, transactionopen t2 where t1.account_id = t2.account_id and t1.type = t2.type and t1.type = 9 and t1.businessDate < t2.businessDate)")
+	@Query(value = "select t.* from transaction_open t where t.type = 'LOAN_FUNDING' and t.id not in (select distinct(t1.id) from transaction_open t1, transaction_open t2 where t1.account_id = t2.account_id and t1.transaction_type = t2.transaction_type and t1.transaction_type = 'LOAN_FUNDING' and t1.business_date < t2.business_date)")
 	List<TransactionOpen> fetchLatestBillingCycles();
 
-	@Query(value = "select t.* from transactionopen t where t.transactionDate = :transactionDate and t.type = 9 and t.id  = (select max(id) from transactionopen where type = 9 and transactionDate = :transactionDate)")
+	@Query(value = "select t.* from transaction_open t where t.transaction_date = :transactionDate and t.transaction_type = 'LOAN_FUNDING' and t.id  = (select max(id) from transaction_open where transaction_type = 'LOAN_FUNDING' and transaction_date = :transactionDate)")
 	List<TransactionOpen> fetchBillingCyclesForDate(@Param("transactionDate") LocalDate transactionDate);
 
-	@Query(value = "select t.* from transactionopen t where t.account_id = :accountId and t.type = 9 and t.transactionDate = :transactionDate and t.id = (select max(id) from transactionopen where account_id = :accountId and type = 9 and transactionDate = :transactionDate )")
+	@Query(value = "select t.* from transaction_open t where t.account_id = :accountId and t.transaction_type = 'LOAN_FUNDING' and t.transaction_date = :transactionDate and t.id = (select max(id) from transaction_open where account_id = :accountId and transaction_type = 'LOAN_FUNDING' and transaction_date = :transactionDate )")
 	Optional<TransactionOpen> fetchBillingCycleForAccountAndDate(@Param("accountId") Long accountId, @Param("transactionDate") LocalDate transactionDate);
 
 	List<TransactionOpen> findAllByOrderByTransactionDate();

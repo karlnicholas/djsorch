@@ -113,7 +113,7 @@ public class BillingCycleProcessor extends BillingCycleProcessorGrpc.BillingCycl
 				.version(1L)
 				.businessDate(businessDateService.getBusinessDate())
 				.transactionDate(billingCyclePosting.retrieveTransactionDate())
-				.type(lateFeeType)
+				.transactionType(lateFeeType)
 				.payload(postingReader.writeValueAsString(lateFeePosting))
 				.build();
 		transactionOpenRepository.save(lateFeeTransaction);
@@ -178,7 +178,7 @@ public class BillingCycleProcessor extends BillingCycleProcessorGrpc.BillingCycl
 				.accountId(fundingTransaction.getAccountId()).version(1L)
 				.businessDate(businessDateService.getBusinessDate())
 				.transactionDate(interestPosting.retrieveTransactionDate())
-				.type(transactionType)
+				.transactionType(transactionType)
 				.payload(postingReader.writeValueAsString(interestPosting)).build();
 
 		transactionOpenRepository.save(interestTransaction);
@@ -245,7 +245,7 @@ public class BillingCycleProcessor extends BillingCycleProcessorGrpc.BillingCycl
 				.version(1L)
 				.businessDate(businessDateService.getBusinessDate())
 				.transactionDate(billingCyclePosting.retrieveTransactionDate())
-				.type(TransactionType.BILLING_CYCLE)
+				.transactionType(TransactionType.BILLING_CYCLE)
 				.payload(postingReader.writeValueAsString(billingCyclePosting)).build();
 
 		return postingReader.readValue(transactionOpenRepository.save(billingCycleTransaction), BillingCyclePosting.class);
@@ -287,7 +287,7 @@ public class BillingCycleProcessor extends BillingCycleProcessorGrpc.BillingCycl
 		List<TransactionOpen> transactions = getTransactionsForBillingCycle(accountId, billingCycle);
 		// determine billing cycle period
 		for (Transaction transaction : transactions) {
-			switch (transaction.getType()) {
+			switch (transaction.getTransactionType()) {
 			case PAYMENT_DEBIT:
 				PaymentDebitPosting paymentDebitPosting = postingReader.readValue(transaction, PaymentDebitPosting.class);
 				accountBalances.setTotalDebits(accountBalances.getTotalDebits().add(paymentDebitPosting.getAmount()));

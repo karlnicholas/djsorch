@@ -56,7 +56,7 @@ public class TransactionProcessor extends TransactionProcessorGrpc.TransactionPr
 		results.put("validated", ByteString.copyFromUtf8(Boolean.FALSE.toString()));
 		transactionSubmittedRepository.findById(Long.parseLong(request.getParamsOrThrow("subject").toStringUtf8()))
 			.ifPresent(transactionSubmitted -> {
-				if (transactionSubmitted.getType() != null) {
+				if (transactionSubmitted.getTransactionType() != null) {
 					PostingFunctions payload = postingReader.instancePayload(transactionSubmitted);
 					if (payload.validate()) {
 						results.put("validated", ByteString.copyFromUtf8(Boolean.TRUE.toString()));
@@ -66,9 +66,9 @@ public class TransactionProcessor extends TransactionProcessorGrpc.TransactionPr
 										.businessDate(businessDateService.getBusinessDate())
 										.transactionDate(payload.retrieveTransactionDate())
 										.payload(transactionSubmitted.getPayload())
-										.type(transactionSubmitted.getType())
+										.transactionType(transactionSubmitted.getTransactionType())
 										.version(transactionSubmitted.getVersion()).build());
-						results.put("transactionType", ByteString.copyFromUtf8(transactionOpen.getType().toString()));
+						results.put("transactionType", ByteString.copyFromUtf8(transactionOpen.getTransactionType().toString()));
 						results.put("transactionId", ByteString.copyFromUtf8(transactionOpen.getId().toString()));
 						results.put("accountId", ByteString.copyFromUtf8(transactionOpen.getAccountId().toString()));
 					}
@@ -128,7 +128,7 @@ public class TransactionProcessor extends TransactionProcessorGrpc.TransactionPr
 				.version(1L)
 				.businessDate(businessDateService.getBusinessDate())
 				.transactionDate(billingCycle.retrieveTransactionDate())
-				.type(TransactionType.BILLING_CYCLE)
+				.transactionType(TransactionType.BILLING_CYCLE)
 				.payload(postingReader.writeValueAsString(billingCycle)).build();
 		transactionOpenRepository.save(billingCycleTransaction);
 		responseObserver.onNext(request.toBuilder()

@@ -23,7 +23,7 @@ public abstract class Transaction implements Persistable<Long> {
 	private Long version;
 	private LocalDate businessDate;
 	private LocalDate transactionDate;
-	private TransactionType type;
+	private TransactionType transactionType;
 	
 	private String payload;
     @Transient

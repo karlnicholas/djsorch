@@ -1,7 +1,5 @@
 package com.github.karlnicholas.djsorch.controller;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -14,28 +12,25 @@ import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.github.karlnicholas.djsorch.model.TransactionSubmitted;
-import com.github.karlnicholas.djsorch.queue.QueueEntry;
-import com.github.karlnicholas.djsorch.queue.SubjectQueueManager;
 import com.github.karlnicholas.djsorch.repository.TransactionSubmittedRepository;
 import com.github.karlnicholas.djsorch.service.BusinessDateService;
+import com.github.karlnicholas.djsorch.service.QueueService;
 
 @RestController
 @RequestMapping("/queue")
 public class QueueRestController {
 	private static final Logger logger = LoggerFactory.getLogger(QueueRestController.class);
-	private final SubjectQueueManager subjectQueueManager;
 	private final TransactionSubmittedRepository transactionSubmittedRepository;
 	private final BusinessDateService businessDateService;
-	private AtomicLong queueId;
+	private final QueueService queueService;
 	public QueueRestController(
-			SubjectQueueManager subjectQueueManager, 
 			TransactionSubmittedRepository transactionSubmittedRepository, 
-			BusinessDateService businessDateService 
+			BusinessDateService businessDateService, 
+			QueueService queueService
 	) {
-		this.subjectQueueManager = subjectQueueManager;
 		this.transactionSubmittedRepository = transactionSubmittedRepository;
 		this.businessDateService = businessDateService;
-		this.queueId = new AtomicLong();
+		this.queueService = queueService;
 	}
 	@PostMapping("/post")
 	public ResponseEntity<?> handlePost(@RequestBody TransactionSubmitted transactionSubmitted) {
@@ -44,7 +39,7 @@ public class QueueRestController {
 			transactionSubmitted.setAsNew();
 			logger.info("post saving: " + transactionSubmitted);
 			transactionSubmittedRepository.save(transactionSubmitted);
-			queueNewTransactionPost(transactionSubmitted.getAccountId(), transactionSubmitted.getId(), "transaction");
+			queueService.queueNewTransactionPost(transactionSubmitted.getAccountId(), transactionSubmitted.getId(), "transaction");
 			return ResponseEntity.accepted().build();
 		} catch ( Exception e ) {
 			return ResponseEntity.badRequest().body(e.getMessage());
@@ -72,32 +67,7 @@ public class QueueRestController {
 	public SubjectQueueManager getSubjectQueueManager() {
 		return subjectQueueManager;
 	}
-
-	private void queueNewTransactionPost(Long accountId, Long transactionId, String action) {
-		QueueEntry queueEntry = QueueEntry.builder()
-				.queueId(queueId.getAndIncrement())
-				.action(action)
-				.accountId(accountId.toString())
-				.transactionId(transactionId.toString())
-				.httpMethod("POST")
-				.build();
-		
-		subjectQueueManager.addQueueEntry(accountId.toString(), queueEntry);
-//		queueEntry.getMonoWim().publishOn(Schedulers.elastic()).subscribe();
-	}
 */
-	private void queueNewTransactionPost(Long accountId, Long transactionId, String action) {
-		QueueEntry queueEntry = QueueEntry.builder()
-				.queueId(queueId.getAndIncrement())
-				.action(action)
-				.accountId(accountId.toString())
-				.transactionId(transactionId.toString())
-				.httpMethod("POST")
-				.build();
-		
-		subjectQueueManager.addQueueEntry(accountId.toString(), queueEntry);
-//		queueEntry.getMonoWim().publishOn(Schedulers.elastic()).subscribe();
-	}
 	@GetMapping("/get/{action}/{subject}")
 	public DeferredResult<ResponseEntity<?>> handleGet(ServerWebExchange serverWebExchange) {
 		String action = serverWebExchange.getRequiredAttribute("action");
@@ -105,14 +75,7 @@ public class QueueRestController {
 		
 	    DeferredResult<ResponseEntity<?>> output = new DeferredResult<>();
 	    
-		QueueEntry queueEntry = QueueEntry.builder()
-				.action(action)
-				.accountId(subject)
-				.serverWebExchange(serverWebExchange)
-				.output(output)
-				.httpMethod("GET")
-				.build();
-		subjectQueueManager.addQueueEntry(subject, queueEntry);
+	    queueService.queueNewGet(serverWebExchange, action, subject, output);
 	    return output;
 	}
 	@GetMapping("transactions")

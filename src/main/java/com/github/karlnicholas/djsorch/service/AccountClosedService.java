@@ -76,7 +76,7 @@ public class AccountClosedService {
 					.businessDate(transaction.getBusinessDate())
 					.transactionDate(transaction.getTransactionDate())
 					.payload(transaction.getPayload())
-					.type(transaction.getType())
+					.transactionType(transaction.getTransactionType())
 					.build()
 				);
 		});
@@ -97,7 +97,7 @@ public class AccountClosedService {
 					.billingCycles(Integer.valueOf(0))
 					.build();
 			transactionClosedRepository.findByAccountClosedId(account.get().getId()).forEach(transaction->{
-				switch (transaction.getType()) {
+				switch (transaction.getTransactionType()) {
 				case BILLING_CYCLE:
 					accountSummary.setBillingCycles(accountSummary.getBillingCycles()+1);
 					break;

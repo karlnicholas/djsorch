@@ -1,7 +1,6 @@
 package com.github.karlnicholas.djsorch;
 
 import java.sql.Statement;
-import java.util.function.Consumer;
 
 import javax.sql.DataSource;
 
@@ -47,12 +46,12 @@ public class DjsApplication implements ApplicationRunner {
 			statement.execute("create table account_closed (id bigint not null, open_date date, original_id bigint, primary key (id))");
 			statement.execute("create table loan (id bigint identity, fixed_mindue decimal(19,2), inception_date date, interest_rate decimal(19,2), principal decimal(19,2), term_months integer, account_id bigint, primary key (id))");
 			statement.execute("create table loan_closed (id bigint not null, fixed_mindue decimal(19,2), inception_date date, interest_rate decimal(19,2), principal decimal(19,2), term_months integer, account_closed_id bigint, primary key (id))");
-			statement.execute("create table transaction_closed (id bigint not null, business_date date, payload varchar(4000), transaction_date date, type varchar(255), version bigint, account_closed_id bigint, primary key (id))");
-			statement.execute("create table transaction_open (id bigint identity, business_date date, payload varchar(4000), transaction_date date, type varchar(255), version bigint, account_id bigint, primary key (id))");
-			statement.execute("create table transaction_submitted (id bigint identity, business_date date, payload varchar(4000), transaction_date date, type varchar(255), version bigint, account_id bigint, primary key (id))");
-			statement.execute("create table transaction_rejected (id bigint not null, business_date date, payload varchar(4000), transaction_date date, type varchar(255), version bigint, account_id bigint, primary key (id))");
+			statement.execute("create table transaction_closed (id bigint not null, business_date date, payload varchar(4000), transaction_date date, transaction_type varchar(255), version bigint, account_closed_id bigint, primary key (id))");
+			statement.execute("create table transaction_open (id bigint identity, business_date date, payload varchar(4000), transaction_date date, transaction_type varchar(255), version bigint, account_id bigint, primary key (id))");
+			statement.execute("create table transaction_submitted (id bigint identity, business_date date, payload varchar(4000), transaction_date date, transaction_type varchar(255), version bigint, account_id bigint, primary key (id))");
+			statement.execute("create table transaction_rejected (id bigint not null, business_date date, payload varchar(4000), transaction_date date, transaction_type varchar(255), version bigint, account_id bigint, primary key (id))");
 			statement.execute("create index IDX8hl04kre9pgr0b9b7r5jipqra on account_closed (original_id)");
-			statement.execute("create index IDXfjs1q0rt6k8jcu5gltousur8y on transaction_open (account_id, type)");
+			statement.execute("create index IDXfjs1q0rt6k8jcu5gltousur8y on transaction_open (account_id, transaction_type)");
 			statement.execute("alter table loan add constraint FKnbbh9l71cf3hk76mvmjjfn7n5 foreign key (account_id) references account");
 			statement.execute("alter table loan_closed add constraint FKpgpt07xu8o7gp4p56up2rf2f8 foreign key (account_closed_id) references account_closed");
 			statement.execute("alter table transaction_closed add constraint FKevvq0jionbirjxljl0y736k53 foreign key (account_closed_id) references account_closed");
