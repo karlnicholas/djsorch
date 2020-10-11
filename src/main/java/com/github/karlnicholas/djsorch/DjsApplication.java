@@ -11,6 +11,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.github.karlnicholas.djsorch.handler.BillingCycleHandler;
 import com.github.karlnicholas.djsorch.handler.TransactionHandler;
 import com.github.karlnicholas.djsorch.queue.SubjectQueueManager;
 
@@ -25,20 +26,25 @@ public class DjsApplication implements ApplicationRunner {
 	private final DataSource dataSource; 
 	private final SubjectQueueManager subjectQueueManager;
 	private final TransactionHandler transactionHandler;
+	private final BillingCycleHandler billingCycleHandler;
 
 	public DjsApplication(
 			DataSource dataSource, 
 			SubjectQueueManager subjectQueueManager, 
-			TransactionHandler transactionProcessor
+			TransactionHandler transactionProcessor, 
+			BillingCycleHandler billingCycleHandler
 	) {
 		this.dataSource = dataSource;
 		this.subjectQueueManager = subjectQueueManager;
 		this.transactionHandler = transactionProcessor;
+		this.billingCycleHandler = billingCycleHandler;
 	}
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		subjectQueueManager.addPostMethod("transaction", transactionHandler::handleTransaction);
+		subjectQueueManager.addPostMethod("billingcycle", billingCycleHandler::handleBillingCycle);
+		
 		try ( Statement statement = dataSource.getConnection().createStatement() ) {
 			statement.execute("create sequence account_seq start with 1000 increment by 1");
 			statement.execute("create sequence loan_seq start with 1000 increment by 1");

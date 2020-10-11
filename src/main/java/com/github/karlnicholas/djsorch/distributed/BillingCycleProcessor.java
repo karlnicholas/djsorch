@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.lognet.springboot.grpc.GRpcService;
+
 import com.github.karlnicholas.djsorch.distributed.Grpcservices.WorkItemMessage;
 import com.github.karlnicholas.djsorch.handler.AccountBalances;
 import com.github.karlnicholas.djsorch.journal.BillingCyclePosting;
@@ -33,6 +35,7 @@ import com.google.protobuf.ByteString;
 
 import io.grpc.stub.StreamObserver;
 
+@GRpcService
 public class BillingCycleProcessor extends BillingCycleProcessorGrpc.BillingCycleProcessorImplBase {
 	
 	private final PostingReader postingReader;

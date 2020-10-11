@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.github.karlnicholas.djsorch.distributed.ServiceClients;
 import com.github.karlnicholas.djsorch.distributed.Grpcservices.WorkItemMessage;
-import com.github.karlnicholas.djsorch.model.TransactionType;
 import com.github.karlnicholas.djsorch.queue.QueueEntry;
 import com.google.protobuf.ByteString;
 
@@ -28,26 +27,26 @@ public class BillingCycleHandler {
 		
 	}
 	public void handleBillingCycle(QueueEntry queueEntry, Consumer<Long> completePostedTransaction) {
-		logger.info("handleTransaction");
+		logger.info("handleBillingCycle");
 
 		Map<String, ByteString> params = new HashMap<>();
 		Map<String, ByteString> results = new HashMap<>();
 		params.put("subject", ByteString.copyFromUtf8(queueEntry.getTransactionId()));
+//		params.put("billingDate", ByteString.copyFromUtf8(queueEntry.));
 
-		WorkItemMessage wim = serviceClients.validateAndProcessTransaction(WorkItemMessage.newBuilder().putAllParams(params).putAllResults(results).build());
-		results.putAll(wim.getResultsMap());
+		WorkItemMessage wim = serviceClients.accountDueDate(WorkItemMessage.newBuilder().putAllParams(params).putAllResults(results).build());
 		params.putAll(wim.getParamsMap());
-
-		Boolean validated = Boolean.valueOf( results.get("validated").toStringUtf8());
-		if ( validated.booleanValue() ) {
-			if ( TransactionType.valueOf(results.get("transactionType").toStringUtf8()) == TransactionType.LOAN_FUNDING ) {
-				wim =  serviceClients.accountFunded(wim.toBuilder().putAllParams(params).putAllResults(results).build());
-				params.putAll(wim.getParamsMap());
-				results.putAll(wim.getResultsMap());
-				params.put("subject", ByteString.copyFromUtf8(queueEntry.getAccountId()));
-				serviceClients.initialBillingCycle(wim.toBuilder().putAllParams(params).putAllResults(results).build());
-			};
-		}
+		results.putAll(wim.getResultsMap());
+		serviceClients.accountInterest(wim.toBuilder().putAllParams(params).putAllResults(results).build());
+		params.putAll(wim.getParamsMap());
+		results.putAll(wim.getResultsMap());
+		serviceClients.accountBillingCycle(wim.toBuilder().putAllParams(params).putAllResults(results).build());
+		params.putAll(wim.getParamsMap());
+		results.putAll(wim.getResultsMap());
+		serviceClients.accountClosing(wim.toBuilder().putAllParams(params).putAllResults(results).build());
+		params.putAll(wim.getParamsMap());
+		results.putAll(wim.getResultsMap());
+		
 		completePostedTransaction.accept(queueEntry.getQueueId());
 
 	}
