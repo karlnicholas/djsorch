@@ -15,7 +15,7 @@ public interface TransactionOpenRepository extends CrudRepository<TransactionOpe
 	List<TransactionOpen> findByAccountId(Long id);
 	Optional<TransactionOpen> findByAccountIdAndTransactionType(Long accountId, TransactionType transactionType);
 	
-	@Query(value = "select t.* from transaction_open t where t.account_id = :accountId and t.transaction_type = 'BILLING_CYCLE' and t.id = (select max(id) from transaction_open where account_id = :account_id and transaction_type = 'BILLING_CYCLE')")
+	@Query(value = "select t.* from transaction_open t where t.account_id = :accountId and t.transaction_type = 'BILLING_CYCLE' and t.id = (select max(id) from transaction_open where account_id = :accountId and transaction_type = 'BILLING_CYCLE')")
 	TransactionOpen fetchLatestBillingCycleForAccount(@Param("accountId") Long accountId);
 
 	@Query(value = "select t.* from transaction_open t where t.transaction_type = 'BILLING_CYCLE' and t.id not in (select distinct(t1.id) from transaction_open t1, transaction_open t2 where t1.account_id = t2.account_id and t1.transaction_type = t2.transaction_type and t1.transaction_type = 'BILLING_CYCLE' and t1.business_date < t2.business_date)")
@@ -23,9 +23,6 @@ public interface TransactionOpenRepository extends CrudRepository<TransactionOpe
 
 	@Query(value = "select t.* from transaction_open t where t.transaction_date = :transactionDate and t.transaction_type = 'BILLING_CYCLE' and t.id  = (select max(id) from transaction_open where transaction_type = 'BILLING_CYCLE' and transaction_date = :transactionDate)")
 	List<TransactionOpen> fetchBillingCyclesForDate(@Param("transactionDate") LocalDate transactionDate);
-
-	@Query(value = "select t.* from transaction_open t where t.account_id = :accountId and t.transaction_type = 'BILLING_CYCLE' and t.transaction_date = :transactionDate and t.id = (select max(id) from transaction_open where account_id = :accountId and transaction_type = 'BILLING_CYCLE' and transaction_date = :transactionDate )")
-	Optional<TransactionOpen> fetchBillingCycleForAccountAndDate(@Param("accountId") Long accountId, @Param("transactionDate") LocalDate transactionDate);
 
 	List<TransactionOpen> findAllByOrderByTransactionDate();
 

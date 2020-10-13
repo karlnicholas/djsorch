@@ -65,7 +65,7 @@ public class BillingCycleProcessor extends BillingCycleProcessorGrpc.BillingCycl
 		Map<String, ByteString> results = new HashMap<>();
 		results.putAll(request.getResultsMap());
 		Long accountId = Long.parseLong(request.getParamsOrThrow("subject").toStringUtf8());
-		String billingDate = request.getParamsOrThrow("billingDate").toStringUtf8();
+		String billingDate = request.getParamsOrThrow("billingdate").toStringUtf8();
 		Optional<Account> account = accountRepository.findById(accountId);
 		if (account.isPresent()) {
 			BillingCyclePosting billingCyclePosting = getBillingCycleByDateOrLatest(account.get().getId(), billingDate);
@@ -127,7 +127,7 @@ public class BillingCycleProcessor extends BillingCycleProcessorGrpc.BillingCycl
 		Map<String, ByteString> results = new HashMap<>();
 		results.putAll(request.getResultsMap());
 		Long accountId = Long.parseLong(request.getParamsOrThrow("subject").toStringUtf8());
-		String billingDate = request.getParamsOrThrow("billingDate").toStringUtf8();
+		String billingDate = request.getParamsOrThrow("billingdate").toStringUtf8();
 		Optional<Account> account = accountRepository.findById(accountId);
 		if (account.isPresent()) {
 			BillingCyclePosting billingCyclePosting = getBillingCycleByDateOrLatest(account.get().getId(), billingDate);
@@ -190,7 +190,7 @@ public class BillingCycleProcessor extends BillingCycleProcessorGrpc.BillingCycl
 	@Override
 	public void accountBillingCycle(WorkItemMessage request, StreamObserver<WorkItemMessage> responseObserver) {
 		Long accountId = Long.parseLong(request.getParamsOrThrow("subject").toStringUtf8());
-		String billingDate = request.getParamsOrThrow("billingDate").toStringUtf8();
+		String billingDate = request.getParamsOrThrow("billingdate").toStringUtf8();
 		Optional<Account> account = accountRepository.findById(accountId);
 		if (account.isPresent()) {
 			BillingCyclePosting billingCyclePosting = getBillingCycleByDateOrLatest(accountId, billingDate);
@@ -257,7 +257,7 @@ public class BillingCycleProcessor extends BillingCycleProcessorGrpc.BillingCycl
 	@Override
 	public void accountClosing(WorkItemMessage request, StreamObserver<WorkItemMessage> responseObserver) {
 		Long accountId = Long.parseLong(request.getParamsOrThrow("subject").toStringUtf8());
-		String billingDate = request.getParamsOrThrow("billingDate").toStringUtf8();
+		String billingDate = request.getParamsOrThrow("billingdate").toStringUtf8();
 		Optional<Account> account = accountRepository.findById(accountId);
 		if (account.isPresent()) {
 			BillingCyclePosting billingCyclePosting = getBillingCycleByDateOrLatest(accountId, billingDate);
@@ -339,16 +339,8 @@ public class BillingCycleProcessor extends BillingCycleProcessorGrpc.BillingCycl
 	}
 
 	private BillingCyclePosting getBillingCycleByDateOrLatest(Long accountId, String billingDate) {
-		Optional<TransactionOpen> billingCycleTransaction = Optional.empty();
-		if ( billingDate != null ) {
-			billingCycleTransaction = transactionOpenRepository.fetchBillingCycleForAccountAndDate(accountId, LocalDate.parse(billingDate));
-		}
-		if ( billingCycleTransaction.isPresent() ) {
-			return postingReader.readValue(billingCycleTransaction.get(), BillingCyclePosting.class);
-		} else {
-			TransactionOpen transaction = transactionOpenRepository.fetchLatestBillingCycleForAccount(accountId);
-			return postingReader.readValue(transaction, BillingCyclePosting.class);
-		}
+		TransactionOpen transaction = transactionOpenRepository.fetchLatestBillingCycleForAccount(accountId);
+		return postingReader.readValue(transaction, BillingCyclePosting.class);
 	}
 
 }

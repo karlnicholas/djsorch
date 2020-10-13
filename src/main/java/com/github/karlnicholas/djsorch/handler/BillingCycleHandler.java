@@ -13,14 +13,21 @@ import org.springframework.stereotype.Component;
 import com.github.karlnicholas.djsorch.distributed.ServiceClients;
 import com.github.karlnicholas.djsorch.distributed.Grpcservices.WorkItemMessage;
 import com.github.karlnicholas.djsorch.queue.QueueEntry;
+import com.github.karlnicholas.djsorch.service.BusinessDateService;
 import com.google.protobuf.ByteString;
 
 @Component
 public class BillingCycleHandler {
 	private static final Logger logger = LoggerFactory.getLogger(BillingCycleHandler.class);
 	private final ServiceClients serviceClients;
-	public BillingCycleHandler(ServiceClients serviceClients) {
+	private final BusinessDateService businessDateService;
+
+	public BillingCycleHandler(
+		ServiceClients serviceClients, 
+		BusinessDateService businessDateService
+	) {
 		this.serviceClients = serviceClients;
+		this.businessDateService = businessDateService;
 	}
 	@PostConstruct
 	public void init() {
@@ -31,8 +38,8 @@ public class BillingCycleHandler {
 
 		Map<String, ByteString> params = new HashMap<>();
 		Map<String, ByteString> results = new HashMap<>();
-		params.put("subject", ByteString.copyFromUtf8(queueEntry.getTransactionId()));
-//		params.put("billingDate", ByteString.copyFromUtf8(queueEntry.));
+		params.put("subject", ByteString.copyFromUtf8(queueEntry.getAccountId().toString()));
+		params.put("billingdate", ByteString.copyFromUtf8(businessDateService.getBusinessDate().toString()));
 
 		WorkItemMessage wim = serviceClients.accountDueDate(WorkItemMessage.newBuilder().putAllParams(params).putAllResults(results).build());
 		params.putAll(wim.getParamsMap());
