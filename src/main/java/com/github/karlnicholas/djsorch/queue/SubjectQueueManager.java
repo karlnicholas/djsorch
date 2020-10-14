@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Queue;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -44,12 +45,10 @@ public class SubjectQueueManager {
 	
 	private void handleGet(QueueEntry queueEntry) {
 		try {
-			ProcessGetMethod processGetMethod = getMethods.getOrDefault(queueEntry.getAction(), 
-					(dbf)->{throw new Exception("Action Not Found: " + queueEntry.getAction());}
-			);
+			ProcessGetMethod processGetMethod = getMethods.get(queueEntry.getAction());
 			processGetMethod.getMethod(queueEntry);
 		} catch (Exception e) {
-			queueEntry.getServerWebExchange().getResponse().setRawStatusCode(404);
+			queueEntry.getResponse().setStatus(HttpStatus.NOT_FOUND.value());
 		}
 	}
 	private void handlePost(QueueEntry queueEntry) {

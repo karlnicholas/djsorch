@@ -1,0 +1,18 @@
+{ "testAccounts": [
+	{    
+		"openAccount": {"openDate":"2020-01-01","term":"12","principal":"10000.00","rate":"0.0699"},
+		"payments": [
+			{"businessDate": "2020-01-25", "paymentDate":"2020-01-25","amount":"865.22"},
+			{"businessDate": "2020-02-25", "paymentDate":"2020-02-25","amount":"865.22"},
+			{"businessDate": "2020-03-25", "paymentDate":"2020-03-25","amount":"865.22"},
+			{"businessDate": "2020-04-25", "paymentDate":"2020-04-25","amount":"865.22"},
+			{"businessDate": "2020-05-25", "paymentDate":"2020-05-25","amount":"865.22"},
+			{"businessDate": "2020-06-25", "paymentDate":"2020-06-25","amount":"865.22"},
+			{"businessDate": "2020-07-25", "paymentDate":"2020-07-25","amount":"865.22"},
+			{"businessDate": "2020-08-25", "paymentDate":"2020-08-25","amount":"865.22"},
+			{"businessDate": "2020-09-25", "paymentDate":"2020-09-25","amount":"865.22"},
+			{"businessDate": "2020-10-25", "paymentDate":"2020-10-25","amount":"865.22"},
+			{"businessDate": "2020-11-25", "paymentDate":"2020-11-25","amount":"865.22"},
+			{"businessDate": "2020-12-25", "paymentDate":"2020-12-25","amount":"803.22"}]
+	}]
+}

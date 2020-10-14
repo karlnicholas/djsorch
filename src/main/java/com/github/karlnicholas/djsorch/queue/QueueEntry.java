@@ -1,8 +1,9 @@
 package com.github.karlnicholas.djsorch.queue;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.async.DeferredResult;
-import org.springframework.web.server.ServerWebExchange;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,8 +22,8 @@ public class QueueEntry {
 	private String transactionId;
 	private String httpMethod;
 	// for get
-	private ServerWebExchange serverWebExchange;
-	private DeferredResult<ResponseEntity<?>> output;
+	private HttpServletResponse response;
+	private DeferredResult<ResponseEntity<?>> deferredResult;
 //	private ServletResponse servletResponse; 
 	private long queueId;
 }

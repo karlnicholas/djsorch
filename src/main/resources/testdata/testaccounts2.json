@@ -1,0 +1,116 @@
+{ "testAccounts": [
+	{    
+		"openAccount": {"openDate":"2020-01-01","term":"12","principal":"10000.00","rate":"0.0699"},
+		"payments": [
+			{"businessDate": "2020-01-25", "paymentDate":"2020-01-25","amount":"865.22"},
+			{"businessDate": "2020-02-25", "paymentDate":"2020-02-25","amount":"865.22"},
+			{"businessDate": "2020-03-25", "paymentDate":"2020-03-25","amount":"865.22"},
+			{"businessDate": "2020-04-25", "paymentDate":"2020-04-25","amount":"865.22"},
+			{"businessDate": "2020-05-25", "paymentDate":"2020-05-25","amount":"865.22"},
+			{"businessDate": "2020-06-25", "paymentDate":"2020-06-25","amount":"865.22"},
+			{"businessDate": "2020-07-25", "paymentDate":"2020-07-25","amount":"865.22"},
+			{"businessDate": "2020-08-25", "paymentDate":"2020-08-25","amount":"865.22"},
+			{"businessDate": "2020-09-25", "paymentDate":"2020-09-25","amount":"865.22"},
+			{"businessDate": "2020-10-25", "paymentDate":"2020-10-25","amount":"865.22"},
+			{"businessDate": "2020-11-25", "paymentDate":"2020-11-25","amount":"865.22"},
+			{"businessDate": "2020-12-25", "paymentDate":"2020-12-25","amount":"803.22"}]
+	},{
+		"openAccount": {"openDate":"2020-01-02","term":"12","principal":"10000.00","rate":"0.0699"},
+		"payments": [
+			{"businessDate": "2020-01-30", "paymentDate":"2020-01-30","amount":"865.22"},
+			{"businessDate": "2020-02-28", "paymentDate":"2020-02-28","amount":"904.22"},
+			{"businessDate": "2020-03-30", "paymentDate":"2020-03-30","amount":"904.22"},
+			{"businessDate": "2020-04-30", "paymentDate":"2020-04-30","amount":"904.22"},
+			{"businessDate": "2020-05-30", "paymentDate":"2020-05-30","amount":"904.22"},
+			{"businessDate": "2020-06-30", "paymentDate":"2020-06-30","amount":"904.22"},
+			{"businessDate": "2020-07-30", "paymentDate":"2020-07-30","amount":"904.22"},
+			{"businessDate": "2020-08-30", "paymentDate":"2020-08-30","amount":"904.22"},
+			{"businessDate": "2020-09-30", "paymentDate":"2020-09-30","amount":"904.22"},
+			{"businessDate": "2020-10-30", "paymentDate":"2020-10-30","amount":"904.22"},
+			{"businessDate": "2020-11-30", "paymentDate":"2020-11-30","amount":"904.22"},
+			{"businessDate": "2020-12-30", "paymentDate":"2020-12-30","amount":"844.76"}]
+	},{
+		"openAccount": {"openDate":"2020-01-03","term":"12","principal":"10000.00","rate":"0.0699"},
+		"payments": [
+			{"businessDate": "2020-01-30", "paymentDate":"2020-01-30","amount":"865.22"},
+			{"businessDate": "2020-02-28", "paymentDate":"2020-02-28","amount":"904.22"},
+			{"businessDate": "2020-03-30", "paymentDate":"2020-03-25","amount":"904.22"},
+			{"businessDate": "2020-04-25", "paymentDate":"2020-04-25","amount":"865.22"},
+			{"businessDate": "2020-05-25", "paymentDate":"2020-05-25","amount":"865.22"},
+			{"businessDate": "2020-06-25", "paymentDate":"2020-06-25","amount":"904.22"},
+			{"businessDate": "2020-07-25", "paymentDate":"2020-07-25","amount":"904.22"},
+			{"businessDate": "2020-08-25", "paymentDate":"2020-08-25","amount":"904.22"},
+			{"businessDate": "2020-09-25", "paymentDate":"2020-09-25","amount":"904.22"},
+			{"businessDate": "2020-10-25", "paymentDate":"2020-10-25","amount":"904.22"},
+			{"businessDate": "2020-11-25", "paymentDate":"2020-11-25","amount":"904.22"},
+			{"businessDate": "2020-12-25", "paymentDate":"2020-12-25","amount":"803.67"}]
+	},{
+		"openAccount": {"openDate":"2020-01-03","term":"12","principal":"10000.00","rate":"0.0699"},
+		"payments": [
+			{"businessDate": "2020-01-30", "paymentDate":"2020-01-30","amount":"865.22"},
+			{"businessDate": "2020-02-28", "paymentDate":"2020-02-28","amount":"904.22"},
+			{"businessDate": "2020-04-25", "paymentDate":"2020-04-25","amount":"1847.44"},
+			{"businessDate": "2020-05-25", "paymentDate":"2020-05-25","amount":"865.22"},
+			{"businessDate": "2020-06-25", "paymentDate":"2020-06-25","amount":"865.22"},
+			{"businessDate": "2020-07-25", "paymentDate":"2020-07-25","amount":"865.22"},
+			{"businessDate": "2020-08-25", "paymentDate":"2020-08-25","amount":"865.22"},
+			{"businessDate": "2020-09-25", "paymentDate":"2020-09-25","amount":"865.22"},
+			{"businessDate": "2020-10-25", "paymentDate":"2020-10-25","amount":"865.22"},
+			{"businessDate": "2020-11-25", "paymentDate":"2020-11-25","amount":"865.22"},
+			{"businessDate": "2020-12-25", "paymentDate":"2020-12-25","amount":"768.57"}]
+	},{
+		"openAccount": {"openDate":"2020-01-04","term":"12","principal":"10000.00","rate":"0.0699"},
+		"payments": [
+			{"businessDate": "2020-01-30", "paymentDate":"2020-01-30","amount":"865.22"},
+			{"businessDate": "2020-02-28", "paymentDate":"2020-02-28","amount":"904.22"},
+			{"businessDate": "2020-04-25", "paymentDate":"2020-04-25","amount":"1847.44"},
+			{"businessDate": "2020-05-25", "paymentDate":"2020-05-25","amount":"865.22"},
+			{"businessDate": "2020-06-25", "paymentDate":"2020-06-25","amount":"865.22"},
+			{"businessDate": "2020-07-25", "paymentDate":"2020-07-25","amount":"865.22"},
+			{"businessDate": "2020-08-25", "paymentDate":"2020-08-25","amount":"865.22"},
+			{"businessDate": "2020-09-25", "paymentDate":"2020-09-25","amount":"865.22"},
+			{"businessDate": "2020-10-25", "paymentDate":"2020-10-25","amount":"865.22"},
+			{"businessDate": "2020-11-25", "paymentDate":"2020-11-25","amount":"865.22"},
+			{"businessDate": "2021-01-05", "paymentDate":"2021-01-05","amount":"812.28"}]
+	},{
+		"openAccount": {"openDate":"2020-01-05","term":"12","principal":"10000.00","rate":"0.0699"},
+		"payments": [
+			{"businessDate": "2020-01-30", "paymentDate":"2020-01-30","amount":"865.22"},
+			{"businessDate": "2020-02-28", "paymentDate":"2020-02-28","amount":"904.22"},
+			{"businessDate": "2020-04-06", "paymentDate":"2020-03-30","amount":"904.22"},
+			{"businessDate": "2020-04-25", "paymentDate":"2020-04-25","amount":"865.22"},
+			{"businessDate": "2020-05-25", "paymentDate":"2020-05-25","amount":"865.22"},
+			{"businessDate": "2020-06-25", "paymentDate":"2020-06-25","amount":"865.22"},
+			{"businessDate": "2020-07-25", "paymentDate":"2020-07-25","amount":"865.22"},
+			{"businessDate": "2020-08-25", "paymentDate":"2020-08-25","amount":"865.22"},
+			{"businessDate": "2020-09-25", "paymentDate":"2020-09-25","amount":"865.22"},
+			{"businessDate": "2020-10-25", "paymentDate":"2020-10-25","amount":"865.22"},
+			{"businessDate": "2020-11-25", "paymentDate":"2020-11-25","amount":"865.22"},
+			{"businessDate": "2020-12-25", "paymentDate":"2020-12-25","amount":"721.09"}]
+	},{
+		"openAccount": {"openDate":"2020-03-20","term":"12","principal":"10000.00","rate":"0.0699"},
+		"payments": [
+			{"businessDate": "2020-03-23", "paymentDate":"2020-03-21","amount":"865.22"},
+			{"businessDate": "2020-06-17", "paymentDate":"2020-06-15","amount":"1769.44"},
+			{"businessDate": "2020-07-23", "paymentDate":"2020-07-22","amount":"1769.44"},
+			{"businessDate": "2020-09-30", "paymentDate":"2020-09-28","amount":"1769.44"},
+			{"businessDate": "2020-11-26", "paymentDate":"2020-11-24","amount":"1769.44"},
+			{"businessDate": "2021-02-05", "paymentDate":"2021-02-05","amount":"1769.44"},
+			{"businessDate": "2021-03-22", "paymentDate":"2021-03-20","amount":"874.38"}]
+	},{
+		"openAccount": {"openDate":"2020-01-06","term":"12","principal":"10000.00","rate":"0.0699"},
+		"payments": [
+			{"businessDate": "2020-02-02", "paymentDate":"2020-02-01","amount":"865.22"},
+			{"businessDate": "2020-03-07", "paymentDate":"2020-03-04","amount":"865.22"},
+			{"businessDate": "2020-04-02", "paymentDate":"2020-04-01","amount":"904.22"},
+			{"businessDate": "2020-05-02", "paymentDate":"2020-05-01","amount":"865.22"},
+			{"businessDate": "2020-06-02", "paymentDate":"2020-06-01","amount":"865.22"},
+			{"businessDate": "2020-07-02", "paymentDate":"2020-07-01","amount":"865.22"},
+			{"businessDate": "2020-08-02", "paymentDate":"2020-08-01","amount":"865.22"},
+			{"businessDate": "2020-09-02", "paymentDate":"2020-09-01","amount":"865.22"},
+			{"businessDate": "2020-10-02", "paymentDate":"2020-10-01","amount":"865.22"},
+			{"businessDate": "2020-11-02", "paymentDate":"2020-11-01","amount":"865.22"},
+			{"businessDate": "2020-12-02", "paymentDate":"2020-12-01","amount":"865.22"},
+			{"businessDate": "2021-01-02", "paymentDate":"2021-01-01","amount":"803.77"}]
+	}]
+}

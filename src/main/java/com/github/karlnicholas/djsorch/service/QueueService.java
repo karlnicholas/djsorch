@@ -2,10 +2,11 @@ package com.github.karlnicholas.djsorch.service;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.async.DeferredResult;
-import org.springframework.web.server.ServerWebExchange;
 
 import com.github.karlnicholas.djsorch.queue.QueueEntry;
 import com.github.karlnicholas.djsorch.queue.SubjectQueueManager;
@@ -30,13 +31,13 @@ public class QueueService {
 		subjectQueueManager.addQueueEntry(accountId.toString(), queueEntry);
 //		queueEntry.getMonoWim().publishOn(Schedulers.elastic()).subscribe();
 	}
-	public void queueNewGet(ServerWebExchange serverWebExchange, String action, String subject,
-			DeferredResult<ResponseEntity<?>> output) {
+	public void queueNewGet(HttpServletResponse response, String action, String subject,
+			DeferredResult<ResponseEntity<?>> deferredResult) {
 		QueueEntry queueEntry = QueueEntry.builder()
 				.action(action)
 				.accountId(subject)
-				.serverWebExchange(serverWebExchange)
-				.output(output)
+				.response(response)
+				.deferredResult(deferredResult)
 				.httpMethod("GET")
 				.build();
 		subjectQueueManager.addQueueEntry(subject, queueEntry);

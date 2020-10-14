@@ -1,15 +1,18 @@
 package com.github.karlnicholas.djsorch.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
-import org.springframework.web.server.ServerWebExchange;
 
 import com.github.karlnicholas.djsorch.model.TransactionSubmitted;
 import com.github.karlnicholas.djsorch.repository.TransactionSubmittedRepository;
@@ -69,13 +72,16 @@ public class QueueRestController {
 	}
 */
 	@GetMapping("/get/{action}/{subject}")
-	public DeferredResult<ResponseEntity<?>> handleGet(ServerWebExchange serverWebExchange) {
-		String action = serverWebExchange.getRequiredAttribute("action");
-		String subject = serverWebExchange.getRequiredAttribute("subject");
+	public DeferredResult<ResponseEntity<?>> handleGet(
+			@PathVariable("action") String action, 
+			@PathVariable("subject") String subject, 
+			HttpServletRequest request, 
+			HttpServletResponse response 
+	) {
 		
 	    DeferredResult<ResponseEntity<?>> output = new DeferredResult<>();
 	    
-	    queueService.queueNewGet(serverWebExchange, action, subject, output);
+	    queueService.queueNewGet(response, action, subject, output);
 	    return output;
 	}
 	@GetMapping("transactions")

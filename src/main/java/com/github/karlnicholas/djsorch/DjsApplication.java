@@ -44,6 +44,7 @@ public class DjsApplication implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		subjectQueueManager.addPostMethod("transaction", transactionHandler::handleTransaction);
 		subjectQueueManager.addPostMethod("billingcycle", billingCycleHandler::handleBillingCycle);
+		subjectQueueManager.addGetMethod("latestbillingcycle", billingCycleHandler::fetchLatestBillingCycleForAccount);
 		
 		try ( Statement statement = dataSource.getConnection().createStatement() ) {
 			statement.execute("create sequence account_seq start with 1000 increment by 1");
