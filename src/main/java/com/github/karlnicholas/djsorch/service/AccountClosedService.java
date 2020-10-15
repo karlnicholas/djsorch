@@ -53,7 +53,7 @@ public class AccountClosedService {
 	}
 
 	@Transactional
-	public Object closeAccount(Long accountId) {
+	public void closeAccount(Long accountId) {
 		Account account = accountRepository.findById(accountId).orElseThrow(()->new IllegalStateException("Account not found: " + accountId));
 		AccountClosed accountClosed = accountClosedRepository.save(AccountClosed.builder().originalId(account.getId()).openDate(account.getOpenDate()).build());
 		Loan loan = loanRepository.findByAccountId(account.getId());
@@ -81,7 +81,6 @@ public class AccountClosedService {
 				);
 		});
 		accountRepository.delete(account);
-		return null;
 	}
 
 	public AccountClosedSummary getAccountClosedSummary(Long originalId) {

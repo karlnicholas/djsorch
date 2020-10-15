@@ -99,7 +99,7 @@ public class TestClient extends Observable {
 	}
 
 	private AccountClosedSummary getAccountClosedSummary(RestTemplate restTemplate, Account account) {
-		return restTemplate.getForEntity("http://localhost:8080/endpoint/accountclosedsummary/{accountId}", AccountClosedSummary.class, account.getId()).getBody();
+		return restTemplate.getForEntity("http://localhost:8080/queue/get/accountclosedsummary/{accountId}", AccountClosedSummary.class, account.getId()).getBody();
 	}
 
 }

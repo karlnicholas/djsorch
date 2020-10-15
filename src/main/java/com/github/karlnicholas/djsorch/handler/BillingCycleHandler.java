@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -38,10 +36,6 @@ public class BillingCycleHandler {
 		this.businessDateService = businessDateService;
 		this.transactionOpenRepository = transactionOpenRepository; 
 		this.transactionClosedRepository = transactionClosedRepository;
-	}
-	@PostConstruct
-	public void init() {
-		
 	}
 	
 	public void fetchLatestBillingCycleForAccount(QueueEntry queueEntry) {

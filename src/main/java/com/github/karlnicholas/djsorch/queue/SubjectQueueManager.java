@@ -48,7 +48,8 @@ public class SubjectQueueManager {
 			ProcessGetMethod processGetMethod = getMethods.get(queueEntry.getAction());
 			processGetMethod.getMethod(queueEntry);
 		} catch (Exception e) {
-			queueEntry.getResponse().setStatus(HttpStatus.NOT_FOUND.value());
+			queueEntry.getResponse().setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			queueEntry.getDeferredResult().setErrorResult(e.getMessage());
 		}
 	}
 	private void handlePost(QueueEntry queueEntry) {

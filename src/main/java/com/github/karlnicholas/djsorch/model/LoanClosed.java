@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -29,10 +30,9 @@ public class LoanClosed implements Persistable<Long>{
 	private BigDecimal interestRate;
 	private BigDecimal fixedMindue;
 	private Integer termMonths;
-	@Override
-	public boolean isNew() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
+    @Override
+    @Transient
+    public boolean isNew() {
+        return getId() == null;
+    }
 }
